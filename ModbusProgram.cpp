@@ -7,8 +7,9 @@ using namespace std;
 
 int main()
 {
+	testDatabase();
 	//testReverse();
-	versionOne();
+	//versionOne();
 	//testWrite2CSV();
 	//testDriveClass();
 	//debugConversion();

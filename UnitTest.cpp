@@ -32,6 +32,14 @@ void versionOne() {
 
 }
 
+void testDatabase() {
+    std::cout << "hello mysql" << std::endl;
+    Database d;
+    d.establishConnection();
+    d.insertTest("WINDAAA");
+    d.closeConnection();
+}
+
 
 
 void testReverse() {

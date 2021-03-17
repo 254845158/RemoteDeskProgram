@@ -13,7 +13,7 @@
 #include "Consumer.hpp"
 #include "Producer.hpp"
 #include "Buffer.hpp"
-
+#include "Database.hpp"
 void versionOne();
 
 void testDriveClass();
@@ -21,5 +21,7 @@ void testDriveClass();
 void testReverse();
 
 void debugConversion();
+
+void testDatabase();
 
 #endif /* UnitTest_hpp */
