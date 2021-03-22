@@ -35,9 +35,32 @@ void versionOne() {
 void testDatabase() {
     std::cout << "hello mysql" << std::endl;
     Database d;
-    d.establishConnection();
-    d.insertTest("WINDAAA");
+    int motorID = 0;
+    if (d.establishConnection() == 0) {
+        std::cout << "Database Connected" << std::endl;
+    }
+    
+    float data[4] = { 1.0f,2.0f,3.0f,4.0f };
+    if (d.insertMotor(motorID, data, 4)==0) {
+        std::cout << "insert to motor table success" << std::endl;
+    }
+    if (d.insertDataInstance(motorID, 1234) == 0) {
+        std::cout << "insert to dataInstance table success" << std::endl;
+    }
+    
+    //problem cannot read last id properly, insertion is fine
+    long long a = d.lastID();
+    std::cout << "lastID = " << a << std::endl;
+    float data2[5] = { 1,2,3,4,5 };
+    if (d.insertMeasuredData(data2, 5) == 0) {
+        std::cout << "insert to measuredData table success" << std::endl;
+    }
+    
     d.closeConnection();
+    std::cout << "Database connection closed" << std::endl;
+    std::cout << "Type anything and enter to quit" << std::endl;
+    char q;
+    std::cin >> q;
 }
 
 
