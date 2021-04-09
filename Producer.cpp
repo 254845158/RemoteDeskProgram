@@ -10,6 +10,7 @@
 
 void producer(MotorDrive& motorDrive,Buffer& b) {
     float data[buffern];
+    long long timestamp;
     //uint16_t output_voltage;
 //    float output_frequency, torque_current;
 //    int output_current;
@@ -29,14 +30,13 @@ void producer(MotorDrive& motorDrive,Buffer& b) {
                 data[3] = motorDrive.read32BitRegister<float>(TORQUE_CURRENT, 3);
                 std::cout << "output torque current = " << data[3] << std::endl;
                 std::this_thread::sleep_for(std::chrono::milliseconds(20));
-                data[4] = 0;    //dummy data
-                data[5] = 2;    //dummy data
+                
                 //speed
-                
+                data[4] = 0;    //dummy data
                 //timeStamp
-                
+                timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
                 //put data to buffer
-                b.put(data);   //line just for debug
+                b.put(data, timestamp);   //line just for debug
 
             }
             else {

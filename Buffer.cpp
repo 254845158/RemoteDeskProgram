@@ -7,7 +7,7 @@
 
 #include "Buffer.hpp"
 
-float* Buffer::get() {
+float* Buffer::get(long long* timestampADD) {
     std::unique_lock<std::mutex> locker(bufmu);
     for (int i = 0; buffern > i; i++) {
         while (buffers[i].size() == 0 && this->terminated == false) {
@@ -23,6 +23,8 @@ float* Buffer::get() {
             this->count--;
         }
     }
+    *timestampADD = this->timestamp[0];
+    this->timestamp.erase(this->timestamp.begin());
     locker.unlock();
     cond.notify_all();      //dont need
     return back;
@@ -35,12 +37,13 @@ int Buffer::time()  {
     return seconds_epoch;
 }
 
-void Buffer::put(float *a) {
+void Buffer::put(float a[buffern], long long timestamp) {
     std::unique_lock<std::mutex> locker(bufmu);
     for (int i = 0; buffern > i; i++) {
         buffers[i].push_back(a[i]);             //push back put new data to back
         this->count++;
     }
+    this->timestamp.push_back(timestamp);
     locker.unlock();
     cond.notify_all();
 }

@@ -7,6 +7,100 @@
 
 #include "UnitTest.hpp"
 
+void fakeProducer(Buffer& b) {
+    long long timestamp;
+    float data[buffern];
+    int sleepTime = 10;
+    //uint16_t output_voltage;
+//    float output_frequency, torque_current;
+//    int output_current;
+    while (b.readUserFlag()) {
+        try {
+            //collect data from drive - only if motor is running i.e. there is output voltage
+            data[0] = 1;
+            std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+            data[1] = rand() % 100;
+            std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+
+            if (data[0] > 0) {
+                data[2] = rand() % 100;
+                std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+                data[3] = rand() % 100;
+                
+                std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+                data[4] = rand() % 100;    //dummy data
+                //speed
+
+                //timeStamp
+                timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+                std::cout << "time stamp = " << timestamp << std::endl;
+                //put data to buffer
+                b.put(data, timestamp);   //line just for debug
+
+            }
+            else {
+                //sleep
+                std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            }
+        }
+        catch (std::runtime_error& e) {
+            std::cout << e.what() << std::endl;
+        }
+
+    }
+    //call terminate function
+    b.terminate();
+
+    std::cout << "Producer terminated..." << std::endl;
+}
+
+/*void fakeV1() {
+    Buffer buf;
+
+    std::thread p(fakeProducer,std::ref(buf));
+    std::thread c(cons, std::ref(buf));
+    std::cout << "Thread running..." << std::endl;
+
+    //read user flag in buffer
+    char ca;
+    std::cout << "Enter q to stop program" << std::endl;
+    std::cin >> ca;
+    while (1) {
+        if (ca == 'q') {
+            buf.toggleUserFlag();
+            break;
+        }
+    }
+
+    p.join();
+    c.join();
+}*/
+
+void fakeV2() {
+    Buffer buf;
+    //set the motor id and its params
+
+    std::thread p(fakeProducer, std::ref(buf));
+    std::thread c(cons, std::ref(buf));
+    std::cout << "Thread running..." << std::endl;
+
+    //read user flag in buffer
+    char ca;
+    std::cout << "Enter q to stop program" << std::endl;
+    std::cin >> ca;
+    while (1) {
+        if (ca == 'q') {
+            buf.toggleUserFlag();
+            break;
+        }
+    }
+
+    p.join();
+    c.join();
+    std::cout << "Database connection closed" << std::endl;
+
+}
+
 void versionOne() {
     Buffer buf;
     MotorDrive motorDrive;

@@ -11,11 +11,11 @@
 #include <iomanip>
 #include <fstream>
 #include "Buffer.hpp"
-
+#include "Database.hpp"
 using namespace std;
 #define Number2Write 500
 
-void write2CSV(std::vector<float> data);
+void write2CSV(float data[buffern], long long timestamp);
 
 void cons(Buffer& b);
 

@@ -24,4 +24,12 @@ void debugConversion();
 
 void testDatabase();
 
+void fakeProducer(Buffer& b);
+
+void fakeV1();
+
+void fakeV2();
+
+
+
 #endif /* UnitTest_hpp */

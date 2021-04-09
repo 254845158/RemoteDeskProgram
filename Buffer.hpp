@@ -22,14 +22,14 @@ using namespace std;
 //std::mutex mu;
 //global variables
 
-const int buffern = 6; //number of data attributes+timestamp
+const int buffern = 5; //number of data attributes
 const int batchN = 5;
 
 class Buffer {
 public:
     Buffer() {}
     
-    void put(float a[buffern]);
+    void put(float a[buffern],long long timestamp);
 
     int time();     //THIS WILL ALSO BE IN FLOAT -- may cause problem
     
@@ -47,12 +47,13 @@ public:
     
     void terminate();
 
-    float* get();
+    float* get(long long* timestampADD);
 
 private:
     std::mutex bufmu;   //instance of mutual exclusion lock
     std::condition_variable cond;  //instance of a condition variable for wait and notify_all
     std::vector<float> buffers [buffern];
+    std::vector<long long> timestamp;
     float back[buffern] = {0};
     bool userFlag = true;
     int count = 0;
