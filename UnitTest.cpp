@@ -33,7 +33,7 @@ void fakeProducer(Buffer& b) {
 
                 //timeStamp
                 timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-                std::cout << "time stamp = " << timestamp << std::endl;
+                //std::cout << "time stamp = " << timestamp << std::endl;
                 //put data to buffer
                 b.put(data, timestamp);   //line just for debug
 
@@ -145,8 +145,9 @@ void testDatabase() {
     //problem cannot read last id properly, insertion is fine
     long long a = d.lastID();
     std::cout << "lastID = " << a << std::endl;
-    float data2[5] = { 1,2,3,4,5 };
-    if (d.insertMeasuredData(data2, 5) == 0) {
+    float data2[5] = { 1.3,2.2,3.1,4.3,5 };
+    float* f = data2;
+    if (d.insertMeasuredData(f, 5) == 0) {
         std::cout << "insert to measuredData table success" << std::endl;
     }
     

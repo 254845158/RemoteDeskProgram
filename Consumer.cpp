@@ -51,16 +51,19 @@ void cons(Buffer& b) {
 
         if (t2 - t1 > averageTime) {
             //send data
+            std::cout << "averaging - count = " << count << std::endl;
+
             for (int i = 0; i < buffern; i++) {
                 data[i] += ans[i];
             }
             count++;
             for (int i = 0; i < buffern; i++) {
-                data[i] = data[i] / count;
+                data[i] = data[i] / (float)count;;
+
             }
             d.insertDataInstance(0, *timestamp);
             std::cout << d.lastID() << std::endl;
-            d.insertMeasuredData(ans, 5);
+            d.insertMeasuredData(data, 5);
             count = 0;
             t1 = 0;
             t2 = 0;
@@ -68,6 +71,7 @@ void cons(Buffer& b) {
         }
         else {
             //accumalate average
+            std::cout << "accumalating" << std::endl;
             for (int i = 0; i < buffern; i++) {
                 data[i] += ans[i];
             }
