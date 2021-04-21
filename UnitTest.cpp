@@ -87,8 +87,9 @@ void fakeV2() {
     //read user flag in buffer
     char ca;
     std::cout << "Enter q to stop program" << std::endl;
-    std::cin >> ca;
+ 
     while (1) {
+        std::cin >> ca;
         if (ca == 'q') {
             buf.toggleUserFlag();
             break;
@@ -98,6 +99,32 @@ void fakeV2() {
     p.join();
     c.join();
     std::cout << "Database connection closed" << std::endl;
+
+}
+
+void versionTwo() {
+    Buffer buf;
+    MotorDrive motorDrive;
+    motorDrive.establishConnection();
+
+    std::thread p(producer, std::ref(motorDrive), std::ref(buf));
+    std::thread c(cons, std::ref(buf));
+    std::cout << "Thread running..." << std::endl;
+
+    //read user flag in buffer
+    char ca;
+
+    while (1) {
+        std::cout << "Enter q to stop program" << std::endl;
+        std::cin >> ca;
+        if (ca == 'q') {
+            buf.toggleUserFlag();
+            break;
+        }
+    }
+
+    p.join();
+    c.join();
 
 }
 

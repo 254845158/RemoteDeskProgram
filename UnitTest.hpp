@@ -30,6 +30,7 @@ void fakeV1();
 
 void fakeV2();
 
+void versionTwo();
 
 
 #endif /* UnitTest_hpp */
