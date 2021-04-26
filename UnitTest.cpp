@@ -11,25 +11,34 @@ void fakeProducer(Buffer& b) {
     long long timestamp;
     float data[buffern];
     int sleepTime = 10;
+    float syncSpeed, syncSpeedrps;
+    float slip;
     //uint16_t output_voltage;
 //    float output_frequency, torque_current;
 //    int output_current;
     while (b.readUserFlag()) {
         try {
             //collect data from drive - only if motor is running i.e. there is output voltage
-            data[0] = 1;
+            data[3] = 350;
+            data[3] = data[3] / sqrt(3);
             std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
-            data[1] = rand() % 100;
+            data[2] = rand() % 100;
             std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
 
-            if (data[0] > 0) {
-                data[2] = rand() % 100;
+            if (data[3] > 0) {
+                data[0] = 50.0f;
                 std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
-                data[3] = rand() % 100;
+                data[5] = 0.5f;
                 
                 std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
-                data[4] = rand() % 100;    //dummy data
+                data[1] = 1495.0f;    //dummy data
                 //speed
+
+                //calculated torque
+                syncSpeed = (data[0] * 60.0f) / 2.0f;
+                slip = (syncSpeed - data[1]) / syncSpeed;
+                syncSpeedrps = syncSpeed * (2.0f * 3.14159236 / 60.0f);
+                data[4] = (3.0f /(slip*syncSpeedrps)) *(pow(data[3], 2) * 0.86) * (1/(pow(0.83+(0.86/slip),2)+pow(0.009593,2)));
 
                 //timeStamp
                 timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
@@ -172,9 +181,9 @@ void testDatabase() {
     //problem cannot read last id properly, insertion is fine
     long long a = d.lastID();
     std::cout << "lastID = " << a << std::endl;
-    float data2[5] = { 1.3,2.2,3.1,4.3,5 };
+    float data2[6] = { 1.3,2.2,3.1,4.3,5,6 };
     float* f = data2;
-    if (d.insertMeasuredData(f, 5) == 0) {
+    if (d.insertMeasuredData(f, 6) == 0) {
         std::cout << "insert to measuredData table success" << std::endl;
     }
     
@@ -234,4 +243,11 @@ void testDriveClass() {
     catch (std::runtime_error& e) {
         std::cout << e.what() << std::endl;
     }
+}
+
+void testM() {
+    
+        float result = 4.0 / sqrt(3);
+        std::cout << result << std::endl;
+    
 }

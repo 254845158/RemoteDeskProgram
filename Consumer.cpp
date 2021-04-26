@@ -63,7 +63,7 @@ void cons(Buffer& b) {
             }
             d.insertDataInstance(0, *timestamp);
             std::cout << d.lastID() << std::endl;
-            d.insertMeasuredData(data, 5);
+            d.insertMeasuredData(data, buffern);
             count = 0;
             t1 = 0;
             t2 = 0;

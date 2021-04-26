@@ -14,6 +14,8 @@
 #include "Producer.hpp"
 #include "Buffer.hpp"
 #include "Database.hpp"
+
+
 void versionOne();
 
 void testDriveClass();
@@ -31,6 +33,8 @@ void fakeV1();
 void fakeV2();
 
 void versionTwo();
+
+void testM();
 
 
 #endif /* UnitTest_hpp */

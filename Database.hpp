@@ -1,10 +1,10 @@
 #pragma once
 #include <mysql/jdbc.h>
 
-#define DATABASESCHEME "TestDB"
+#define DATABASESCHEME "Data"
 #define INSERT_MOTOR_SQL "INSERT INTO Motor VALUES(?,?,?,?,?)" //id, rated v, rated c, rated p, rated f
 #define INSERT_DATA_INSTANCE_SQL "INSERT INTO DataInstance VALUES(NULL,?,?)" //id, fkid, timestamp
-#define INSERT_MEASURED_DATA_SQL "INSERT INTO MeasuredData VALUES(?,?,?,?,?,?)" //id, v, c, tc, s, f
+#define INSERT_MEASURED_DATA_SQL "INSERT INTO MeasuredData VALUES(?,?,?,?,?,?,?)" //id, v, c, tc, s, f
 #define LAST_INSERT_ID_SQL "SELECT LAST_INSERT_ID()"
 #define INSERT_TEST_SQL "INSERT INTO Test VALUES (?)"
 

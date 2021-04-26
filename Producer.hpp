@@ -18,6 +18,7 @@
 #define OUTPUT_FREQUENCY 500
 #define OUTPUT_CURRENT 400
 #define TORQUE_CURRENT 401
+#define ROTATINAL_SPEED 301
 
 void producer(MotorDrive& motorDrive,Buffer& b);
 

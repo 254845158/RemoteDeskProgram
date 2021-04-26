@@ -7,6 +7,7 @@ using namespace std;
 
 int main()
 {
+	//testM();
 	versionTwo();
 	//fakeV2();
 	//testDatabase();

@@ -22,7 +22,7 @@ using namespace std;
 //std::mutex mu;
 //global variables
 
-const int buffern = 5; //number of data attributes
+const int buffern = 6; //number of data attributes
 const int batchN = 5;
 
 class Buffer {
